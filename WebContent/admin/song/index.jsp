@@ -44,14 +44,29 @@
                                 <div class="col-sm-6">
                                     <a href="<%=request.getContextPath() %>/admin/songs/add" class="btn btn-success btn-md">Thêm</a>
                                 </div>
-                                <div class="col-sm-6" style="text-align: right;">
+                                
+                                <div class="col-sm-6" style="text-align: left;">
                                     <form method="post" action="<%=request.getContextPath() %>/admin/songs/search">
                                         <input type="submit" name="search" value="Tìm kiếm" class="btn btn-warning btn-sm" style="float:right" />
                                         <input type="search" name="text" class="form-control input-sm" placeholder="Nhập tên bài hát" style="float:right; width: 300px;" />
                                         <div style="clear:both"></div>
                                     </form><br />
                                 </div>
+                                <div class="col-sm-6" style="text-align: left;">
+                                       <label for="sort">Sắp xếp</label>
+                                      <div class="dropdown" data-target="DropdownContent">
+										  Lượt xem
+										  <div class="dropdown-content"id="DropdownContent">
+										  	<ul class="like-select">
+										  		<li><a  href="<%=request.getContextPath() %>/admin/songs/sort?sort_id=1">Từ cao đến thấp</a></li>
+										  		<li><a  href="<%=request.getContextPath() %>/admin/songs/sort?sort_id=2">Từ thấp đến cao</a></li>
+											</ul>
+										  </div>
+									  </div>
+                                 </div>
+                                 <br>
                             </div>
+                            <br>
 
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
@@ -95,6 +110,7 @@
                             	int songAmount = (Integer) request.getAttribute("songAmount");
                             	int pages = (Integer) request.getAttribute("pages");
                             	int currentPage = (Integer) request.getAttribute("currentPage");
+                            	int setPageShow = (Integer) request.getAttribute("setPageShow");
                             	if(songList != null && songList.size() > 0){
                             		
                             %>
@@ -105,7 +121,6 @@
                                 <div class="col-sm-6" style="text-align: right;">
                                     <div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
                                         <ul class="pagination">
-                                            <!-- <li class="paginate_button previous disabled" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous"><a href="#">Trang trước</a></li> -->
                                             <li class="paginate_button previous disabled" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous"><a href="javascript:void(0)" style="font-weight: bold;">Trang </a></li>
                                             <%
                                             	String active = "";
@@ -117,11 +132,25 @@
                                             		}
                                             		
                                             %>
+                                            <%
+                                            	if(setPageShow==1){ 
+                                            %>
                                             <li class="paginate_button<%=active %>" aria-controls="dataTables-example" tabindex="0"><a href="<%=request.getContextPath()%>/admin/songs?page=<%=i%>"><%=i %></a></li>
+                                            <%
+                                            	} else if(setPageShow==2){
+                                            		int sort_id = (Integer) request.getAttribute("sort_id");
+                                            %>
+                                            <li class="paginate_button<%=active %>" aria-controls="dataTables-example" tabindex="0"><a href="<%=request.getContextPath()%>/admin/songs/sort?sort_id=<%=sort_id %>&page=<%=i%>"><%=i %></a></li>
+                                            <%
+                                            	} else {
+                                            %>
+                                            <li class="paginate_button<%=active %>" aria-controls="dataTables-example" tabindex="0"><a href="<%=request.getContextPath()%>/admin/songs/search?page=<%=i%>"><%=i %></a></li>
                                             <%
                                             	}
                                             %>
-                                            <!-- <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next"><a href="#">Trang tiếp</a></li> -->
+                                            <%
+                                            	}
+                                            %>
                                         </ul>
                                     </div>
                                 </div>
@@ -138,6 +167,23 @@
         </div>
     </div>
 </div>
+<<script type="text/javascript">
+	var dropdown = document.getElementsByClassName("dropdown");
+	var attribute;
+	var myFunction = function() {
+	attribute = this.getAttribute("data-target");
+	    var x = document.getElementById(attribute);
+	    if (x.style.display === "none") {
+	        x.style.display = "block";
+	    } else {
+	        x.style.display = "none";
+	    }
+	  
+	};
+	for (var i = 0; i < dropdown.length; i++) {
+	    dropdown[i].addEventListener('click', myFunction, false);
+	}
+</script>
 <script>
     document.getElementById("song").classList.add('active-menu');
 </script>

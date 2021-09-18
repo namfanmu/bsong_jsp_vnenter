@@ -207,6 +207,15 @@
 		<servlet-name>AdminSearchSongController</servlet-name>
 		<url-pattern>/admin/songs/search</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AdminSortSongController</servlet-name>
+		<servlet-class>controller.AdminSortSongController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminSortSongController</servlet-name>
+		<url-pattern>/admin/songs/sort</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>IndexPublicController</servlet-name>
@@ -260,6 +269,15 @@
 	<servlet-mapping>
 		<servlet-name>PublicContactController</servlet-name>
 		<url-pattern>/contact</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>PublicCommentController</servlet-name>
+		<servlet-class>controller.PublicCommentController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PublicCommentController</servlet-name>
+		<url-pattern>/comment</url-pattern>
 	</servlet-mapping>
 
 </web-app>

@@ -58,6 +58,9 @@ public class AdminSearchSongController extends HttpServlet {
 
 			ArrayList<Song> songList = songDAO.getAllSongByNamePaging(text, offset);
 			request.setAttribute("songList", songList);
+			
+			int setPageShow = 3;
+			request.setAttribute("setPageShow", setPageShow);
 			request.getRequestDispatcher("/admin/song/index.jsp").forward(request, response);
 		}
 	}

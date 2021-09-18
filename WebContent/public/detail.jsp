@@ -1,3 +1,4 @@
+<%@page import="model.bean.Comment"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ include file="/templates/public/inc/header.jsp" %>
@@ -16,8 +17,8 @@
       </div>
     </div>
     
-    <div class="article">
-      <h2>Bài viết liên quan</h2>
+    <div class="article"  >
+      <h2 id="relative">Bài viết liên quan</h2>
       <div class="clr"></div>
       <%
       	ArrayList<Song> songs=(ArrayList<Song>)request.getAttribute("songList");
@@ -34,6 +35,86 @@
 			}
       %>
     </div>
+    
+    <!-- Comment -->
+    <div class="article">
+			<div class="panel-primary">
+				<div class="panel-heading">
+					<h2 id="relative">Bình luận</h2>
+				</div>
+				<form class="form-cmt">
+					<div class="form-item">
+						<input type="text" name="song_id" id="song_id" value="<%=song.getId() %>" disabled="disabled" />
+					</div>
+					<br>
+					<div class="form-item">
+						<input type="text" name="fullname" id="fullname" value="" placeholder="Nhập tên" required="required" />
+					</div>
+					<br>
+					<div class="form-item">
+						<input type="text" name="cmt" id="cmt" value="" placeholder="Nhập bình luận" required="required" />
+						
+					</div>
+					<br>
+					<a href="javascript:void(0)" title="" class="btn" onclick="return getComment()">Bình luận</a>
+				</form>
+			</div>
+			<p id="print"></p>
+		</div>
+
+		<script type="text/javascript">
+		
+		function getComment() {
+			var name=$("#fullname").val();
+			var cmt=$("#cmt").val();
+			var song_id=$("#song_id").val();
+			
+			$.ajax({
+				url: '<%=request.getContextPath()%>/comment',
+				type: 'POST',
+				cache: false,
+				data: {
+					//Dữ liệu gửi đi
+					name: name,
+					cmt: cmt,
+					song_id: song_id
+				},
+				success: function(data){
+					// Xử lý thành công
+					$(".ajax-data").html(data);
+				},
+				error: function (){
+					// Xử lý nếu có lỗi
+					alert("Error!");
+				}
+				
+			});
+			return false;
+		}
+		
+		</script>
+
+		<div class="ajax-data">
+				<%
+					ArrayList<Comment> cmtList=(ArrayList<Comment>)request.getAttribute("cmtList");
+					if(cmtList!=null&&cmtList.size()>0){
+						for(Comment comment : cmtList){
+				%>
+						<div class="item-cmt">
+							<p class="name-cmt"><%=comment.getName() %></p>
+							<p class="content-cmt"><%=comment.getComment() %></p>
+							<p class="time-cmt"><%=comment.getDatePost() %></p>
+						</div>
+				<%
+						}} else{
+				%>
+				<p style="color: red;">Chưa có bình luận nào cả! </p>
+				<%
+					}
+				%>
+				
+		</div>
+    
   </div>
   <div class="sidebar">
   <%@ include file="/templates/public/inc/leftbar.jsp" %>

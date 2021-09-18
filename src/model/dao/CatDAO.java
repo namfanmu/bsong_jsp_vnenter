@@ -167,4 +167,10 @@ public class CatDAO {
 		return amount;
 	}
 
+	public static void main(String[] args) {
+		CatDAO catDAO = new CatDAO();
+		ArrayList<Category> categories = catDAO.getAllCategories();
+		System.out.println(categories);
+	}
+
 }

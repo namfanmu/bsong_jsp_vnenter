@@ -167,6 +167,14 @@ h1 small {
 	line-height:1.2em;
 	color:#6e6e6e;
 }
+.content .mainbar #relative {
+	margin-bottom:0;
+	padding-bottom:8px;
+	font-size:24px;
+	line-height:1.2em;
+	color:#6e6e6e;
+	border-top-style: solid;
+}
 .content .mainbar div.img {
 	padding:12px 0 0;
 	float:left;
@@ -843,4 +851,23 @@ a {
     position: relative;
     border: 3px solid #efe30c;
     border-radius: 20px;
+}
+.item-cmt {
+    border-bottom: 1px dotted #ff0080;
+}
+.name-cmt {
+    border: 1px dashed #01B0F3;
+    padding: 0 3px;
+    background-color: #FFFFFF;
+}
+.content-cmt {
+	padding-left: 5px;
+	margin-left: 5px;
+}
+.time-cmt {
+    color: #ff55aa;
+    margin-left: 20px;
+}
+.item-cmt p {
+    display: inline-block;
 }

@@ -9,19 +9,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.bean.Comment;
 import model.bean.Song;
 import model.dao.CatDAO;
+import model.dao.CommentDAO;
 import model.dao.SongDAO;
 
 public class PublicDetailController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private SongDAO songDAO;
 	private CatDAO catDAO;
+	private CommentDAO commentDAO;
 
 	public PublicDetailController() {
 		super();
 		songDAO = new SongDAO();
 		catDAO = new CatDAO();
+		commentDAO = new CommentDAO();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -54,6 +58,9 @@ public class PublicDetailController extends HttpServlet {
 		ArrayList<Song> songList = songDAO.getRelativeSong(song, 5);
 		request.setAttribute("songList", songList);
 		request.setAttribute("song", song);
+
+		ArrayList<Comment> cmtList = commentDAO.getAllCommentBySongId(id);
+		request.setAttribute("cmtList", cmtList);
 
 		request.getRequestDispatcher("/public/detail.jsp").forward(request, response);
 	}

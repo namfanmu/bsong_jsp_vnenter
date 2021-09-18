@@ -13,11 +13,11 @@ import model.dao.SongDAO;
 import util.AuthUtil;
 import util.DefineUtil;
 
-public class AdminIndexSongController extends HttpServlet {
+public class AdminSortSongController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private SongDAO songDAO;
 
-	public AdminIndexSongController() {
+	public AdminSortSongController() {
 		super();
 		songDAO = new SongDAO();
 	}
@@ -48,12 +48,18 @@ public class AdminIndexSongController extends HttpServlet {
 		request.setAttribute("pages", pages);
 		request.setAttribute("currentPage", currentPage);
 
-		ArrayList<Song> songList = songDAO.getAllSongPaging(offset);
+		int sort_id = Integer.parseInt(request.getParameter("sort_id"));
+		ArrayList<Song> songList = new ArrayList<Song>();
+		if (sort_id == 1) {
+			songList = songDAO.getAllSongPagingByCounterDESC(offset);
+		} else {
+			songList = songDAO.getAllSongPagingByCounterASC(offset);
+		}
 		request.setAttribute("songList", songList);
-
-		int setPageShow = 1;
+		
+		int setPageShow = 2;
 		request.setAttribute("setPageShow", setPageShow);
-
+		request.setAttribute("sort_id", sort_id);
 		request.getRequestDispatcher("/admin/song/index.jsp").forward(request, response);
 	}
 

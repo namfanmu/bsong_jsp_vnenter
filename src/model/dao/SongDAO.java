@@ -288,4 +288,44 @@ public class SongDAO {
 		return songList;
 	}
 
+	public ArrayList<Song> getAllSongPagingByCounterDESC(int offset) {
+		ArrayList<Song> songList = new ArrayList<Song>();
+		conn = DBConnectionUtil.getConnection();
+		String query = "SELECT * FROM songs ORDER BY counter DESC LIMIT ?, ?";
+		try {
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, offset);
+			ps.setInt(2, DefineUtil.NUMBER_PER_PAGE);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Song song2 = new Song(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
+						rs.getString(6), rs.getInt(7), rs.getInt(8));
+				songList.add(song2);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return songList;
+	}
+
+	public ArrayList<Song> getAllSongPagingByCounterASC(int offset) {
+		ArrayList<Song> songList = new ArrayList<Song>();
+		conn = DBConnectionUtil.getConnection();
+		String query = "SELECT * FROM songs ORDER BY counter ASC LIMIT ?, ?";
+		try {
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, offset);
+			ps.setInt(2, DefineUtil.NUMBER_PER_PAGE);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Song song2 = new Song(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
+						rs.getString(6), rs.getInt(7), rs.getInt(8));
+				songList.add(song2);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return songList;
+	}
+
 }
